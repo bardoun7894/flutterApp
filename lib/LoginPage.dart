@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/OrderPage.dart';
 
 
-  class MyApp extends StatefulWidget{
+  class LoginPage extends StatefulWidget{
+
   @override
   State<StatefulWidget> createState() {
 
@@ -9,27 +11,31 @@ import 'package:flutter/material.dart';
   }
 
   }
-  class MyHomeState extends State<MyApp>{
-
-int num =0;
-static String name2="jaamamal";
-  String ss  =" ";
+  class MyHomeState extends State<LoginPage>{
 
 
+    final TextEditingController _userController=new TextEditingController();
+    final TextEditingController _passController=new TextEditingController();
+    static String name2="";
+        String ss  =" ";
+ Widget _register(){
 
-_clear(){
-  _userController.clear();
 
-  _passController.clear();
-   _login();
 }
 _login(){
   setState(() {
+   String uc =  _userController.text;
+  String   pC =_passController.text;
 
-   String ll =  _userController.text;
-  String   mm =_passController.text;
-   ss= ll+mm;
+   ss= uc+pC;
+   if (!uc.trim().isEmpty && !pC.trim().isEmpty){
 
+     Navigator.of(context).push(
+         MaterialPageRoute( builder:  (context) => OrderPage( data: ss,)
+         ) );
+
+
+   }
 
 
 
@@ -60,7 +66,8 @@ _login(){
       ),
       backgroundColor:Colors.white,
 
-    body:  new Container(
+    body:
+    new Container(
         color:Colors.black12,
         padding: EdgeInsets.all(22.5 ),
 alignment: Alignment.center,
@@ -94,7 +101,7 @@ Widget loginForm( ){
       children: <Widget>[
         new TextField(
           controller: _userController,onTap: null,
-          decoration:  decorateField(Icon(Icons.person), "enter ur username"),),
+          decoration:  decorateField(Icon(Icons.person), "enter ur user"),),
         new Padding( padding : EdgeInsets.fromLTRB(30, 10, 30, 10) ),
         new TextField(controller: _passController,obscureText: true,onTap: null,decoration: decorateField(Icon(Icons.lock), "enter ur password"),),
         new Padding( padding : EdgeInsets.fromLTRB(30, 10, 30, 10) ),
@@ -106,7 +113,8 @@ Widget loginForm( ){
                new Padding( padding : EdgeInsets.fromLTRB(50, 0, 10, 0)),
                new FlatButton(padding: EdgeInsets.all(10) ,onPressed: _login, child: Text("Login",style: TextStyle(fontSize:20,color: Colors.white,backgroundColor: Colors.blue),)),
                new Padding( padding : EdgeInsets.fromLTRB(50, 0, 10, 0)),
-               new FlatButton( padding:EdgeInsets.all(10),onPressed: _clear, child: Text("Register",style: TextStyle(fontSize:20,color: Colors.white,backgroundColor: Colors.blue),))
+               new FlatButton( padding:EdgeInsets.all(10),onPressed:(){  _register();  },
+                   child: Text("Register",style: TextStyle(fontSize:20,color: Colors.white,backgroundColor: Colors.blue),))
 
              ],
            ),
@@ -119,9 +127,6 @@ Widget loginForm( ){
     , );
 
 }
-
-final TextEditingController _userController=new TextEditingController();
-final TextEditingController _passController=new TextEditingController();
 
      decorateField(Icon icon, String hint){
   return InputDecoration(
